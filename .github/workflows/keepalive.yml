@@ -1,0 +1,22 @@
+name: Keep Supabase warm
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      # Free-tier Supabase projects pause after a week of inactivity — see
+      # CLAUDE.md "Operational notes". This just needs to touch the
+      # database; RLS blocks the anon key from seeing rows, and that's fine.
+      - name: Trivial query to reset the inactivity timer
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          curl -sf "$SUPABASE_URL/rest/v1/households?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY"
