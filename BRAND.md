@@ -90,10 +90,19 @@ Google Fonts: `Newsreader:wght@400;500;600`, `Karla:wght@400;500;600;700`,
 
 ## Icon / logo
 
-Not yet designed. Reference only: the OS share-sheet mock shows a 58px terracotta
-rounded-square icon (radius 16) with a 26px Newsreader "C". Needed for real at 192×192 and
-512×512 for the PWA install icon (`vite.config.ts` still references placeholder paths —
-tracked as a Phase 2 item).
+Two shortlisted candidates in
+[`design_handoff_family_cookbook/logo/`](./design_handoff_family_cookbook/logo/README.md)
+— same top-down skillet mark, two tiles. **Not yet decided**; the plan is to pick once real
+UI exists to see them against, not in isolation.
+
+| Candidate | Tile | Character |
+|---|---|---|
+| `9a-cream-tile` | `#F2E8D9` oat cream, ink pan, terracotta cooking surface | Quiet — recedes on a busy home screen |
+| `9d-gradient-tile` | Terracotta gradient, ink pan, pale cream cooking surface | Warmer, louder; drops the hang-hole detail (closes up at small sizes on the gradient) |
+
+SVG is the source; PNGs are 512×512 previews, corner radius 116/512 to match the iOS
+squircle. Needed for real at 192×192 and 512×512 for the PWA install icon
+(`vite.config.ts` still references placeholder paths — tracked as a Phase 2 item).
 
 ---
 
