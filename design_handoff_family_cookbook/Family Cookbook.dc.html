@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Karla:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#efe9e0;font-family:Karla,system-ui,sans-serif}
+a{color:#B4552F}a:hover{color:#8f4223}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#2E2621;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#2E2621}
+.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#2E2621;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-opt:target .dv-oid{background:#B4552F;color:#fff}
+.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+</style></helmet>
+
+<section class="dv-turn" id="t4">
+<div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">One-time setup — iOS Shortcut (tap the step cards)</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="4a"><div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a>Setup checklist — sent to each family member once</div>
+<div style="width:390px;height:844px;background:#FBF6EC;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0;font:600 12px Karla,sans-serif;color:#2E2621"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+  <div style="padding:18px 20px 0;display:flex;flex-direction:column;gap:6px">
+    <span style="font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#9C8B78">Three minutes, once</span>
+    <span style="font:500 30px/1.1 Newsreader,serif;color:#2E2621;letter-spacing:-.01em">Set up sharing<br>on this phone</span>
+    <span style="font:400 14px/1.5 Karla,sans-serif;color:#5C4E42;margin-top:4px">After this, saving a recipe is: tap share, tap the cookbook. That’s the whole thing.</span>
+  </div>
+
+  <div style="padding:16px 20px 0;display:flex;align-items:center;gap:11px">
+    <div style="flex:1;height:5px;border-radius:3px;background:#EAE1D2;overflow:hidden"><div style="width:{{ setupBar }};height:100%;background:#7E8F6E"></div></div>
+    <span style="font:500 11px 'IBM Plex Mono',monospace;color:#7E8F6E;white-space:nowrap">{{ setupProgress }}</span>
+  </div>
+
+  <div style="padding:16px 20px 0;display:flex;flex-direction:column;gap:12px">
+    <sc-for list="{{ setupSteps }}" as="st" hint-placeholder-count="3">
+      <div onClick="{{ st.toggle }}" style="border-radius:18px;background:{{ st.cardBg }};padding:16px;display:flex;gap:13px;cursor:pointer">
+        <div style="width:32px;height:32px;border-radius:50%;flex:none;background:{{ st.markBg }};color:{{ st.markColor }};display:flex;align-items:center;justify-content:center;font:600 14px Karla,sans-serif">{{ st.mark }}</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <span style="font:600 15px/1.25 Karla,sans-serif;color:#2E2621">{{ st.title }}</span>
+          <span style="font:400 13px/1.45 Karla,sans-serif;color:#5C4E42">{{ st.body }}</span>
+          <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C8B78;margin-top:2px">{{ st.meta }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:absolute;left:20px;right:20px;bottom:26px;display:flex;flex-direction:column;gap:10px">
+    <div style="height:60px;border-radius:30px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;gap:9px;font:600 17px Karla,sans-serif;box-shadow:0 10px 24px rgba(180,85,47,.3)">Install the shortcut</div>
+    <div style="text-align:center;font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">Android? It just works — skip all of this.</div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="4b"><div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a>Step 3 in detail — what “Edit Actions” looks like</div>
+<div style="width:390px;height:844px;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;background:#FBF6EC;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0;font:600 12px Karla,sans-serif;color:#2E2621"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+  <div style="padding:16px 20px 0;display:flex;align-items:center;gap:10px">
+    <span style="font-size:17px;color:#2E2621">←</span>
+    <span style="font:500 22px Newsreader,serif;color:#2E2621">Pin it in the share sheet</span>
+  </div>
+  <div style="padding:10px 20px 0"><span style="font:400 14px/1.5 Karla,sans-serif;color:#5C4E42">The shortcut is installed — it’s just buried. Move it to the front of the actions row once and it stays there.</span></div>
+
+  <div style="margin:18px 20px 0;border-radius:20px;background:#F2E8D9;padding:14px;display:flex;flex-direction:column;gap:12px">
+    <span style="font:400 10px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#9C8B78">What you’ll see</span>
+    <div style="border-radius:14px;background:#FBF6EC;padding:14px;display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 13px Karla,sans-serif;color:#2E2621">Edit actions</span>
+      <div style="display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;background:#F5EDE0;border:1.5px solid #B4552F">
+        <span style="font-size:15px;color:#7E8F6E">＋</span>
+        <div style="width:28px;height:28px;border-radius:8px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:500 14px Newsreader,serif">C</div>
+        <span style="font:600 13px Karla,sans-serif;color:#2E2621;flex:1">Save to Cookbook</span>
+        <span style="font-size:15px;color:#9C8B78">≡</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:11px;padding:9px 10px;opacity:.5">
+        <span style="font-size:15px;color:#B4552F">−</span>
+        <div style="width:28px;height:28px;border-radius:8px;background:#E4D3BB"></div>
+        <span style="font:400 13px Karla,sans-serif;color:#5C4E42;flex:1">Add to Reading List</span>
+        <span style="font-size:15px;color:#9C8B78">≡</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:11px;padding:9px 10px;opacity:.5">
+        <span style="font-size:15px;color:#B4552F">−</span>
+        <div style="width:28px;height:28px;border-radius:8px;background:#E4D3BB"></div>
+        <span style="font:400 13px Karla,sans-serif;color:#5C4E42;flex:1">Print</span>
+        <span style="font-size:15px;color:#9C8B78">≡</span>
+      </div>
+    </div>
+    <span style="font:400 12px/1.45 Karla,sans-serif;color:#5C4E42">Drag <span style="color:#2E2621;font-weight:600">Save to Cookbook</span> to the top using the ≡ handle, then tap Done.</span>
+  </div>
+
+  <div style="margin:16px 20px 0;padding:13px 15px;border-radius:14px;background:#EDF0E7;display:flex;gap:10px;align-items:flex-start">
+    <span style="font-size:14px;color:#7E8F6E">✓</span>
+    <span style="font:400 12px/1.4 Karla,sans-serif;color:#4F5C41">Test it now: open any reel, tap share, tap Save to Cookbook. It should land in the feed within a minute.</span>
+  </div>
+
+  <div style="position:absolute;left:20px;right:20px;bottom:26px;display:flex;gap:10px">
+    <div style="width:96px;height:56px;border-radius:28px;background:#F2E8D9;color:#5C4E42;display:flex;align-items:center;justify-content:center;font:600 15px Karla,sans-serif">Back</div>
+    <div style="flex:1;height:56px;border-radius:28px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:600 16px Karla,sans-serif;box-shadow:0 10px 24px rgba(180,85,47,.3)">Done — it’s working</div>
+  </div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: "add a fourth step for signing the rest of the family in" · "make <a class="dv-oid" href="#4a">4a</a> appear as a card in the feed instead of a full screen" · "write the actual Shortcut config"</p>
+</section>
+
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Share a reel → recipe (Hearth)</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a"><div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>The share sheet — you never open the app</div>
+<div style="width:390px;height:844px;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;background:#171412;display:flex;flex-direction:column">
+  <div style="flex:1;background:repeating-linear-gradient(160deg,#2A2521 0 14px,#231F1B 14px 28px);position:relative">
+    <div style="display:flex;justify-content:space-between;padding:16px 24px 0;font:600 12px Karla,sans-serif;color:rgba(255,255,255,.7)"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+    <span style="position:absolute;left:24px;top:120px;font:400 9px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.45);background:rgba(255,255,255,.08);padding:4px 7px;border-radius:5px">short-form video app · paused reel</span>
+    <div style="position:absolute;left:24px;bottom:24px;display:flex;flex-direction:column;gap:6px">
+      <span style="font:500 15px Karla,sans-serif;color:rgba(255,255,255,.92)">@weeknightkitchen</span>
+      <span style="font:400 13px/1.4 Karla,sans-serif;color:rgba(255,255,255,.62);max-width:230px">15-minute gochujang noodles that got me through finals week</span>
+    </div>
+  </div>
+  <div style="background:#FBF6EC;border-radius:22px 22px 0 0;padding:14px 0 26px;flex:none">
+    <div style="width:38px;height:4px;border-radius:2px;background:rgba(60,40,25,.18);margin:0 auto 16px"></div>
+    <div style="padding:0 20px 16px;display:flex;flex-direction:column;gap:2px">
+      <span style="font:600 15px Karla,sans-serif;color:#2E2621">Share reel</span>
+      <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">tiktok.com/@weeknightkitchen/video/7382…</span>
+    </div>
+    <div style="display:flex;gap:16px;padding:0 20px 18px;overflow:hidden">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px">
+        <div style="width:58px;height:58px;border-radius:16px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:500 26px Newsreader,serif;box-shadow:0 6px 16px rgba(180,85,47,.34)">C</div>
+        <span style="font:600 11px/1.2 Karla,sans-serif;color:#2E2621;text-align:center">Family<br>Cookbook</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px">
+        <div style="width:58px;height:58px;border-radius:16px;background:#E4D3BB"></div>
+        <span style="font:400 11px/1.2 Karla,sans-serif;color:#9C8B78;text-align:center">Messages</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px">
+        <div style="width:58px;height:58px;border-radius:16px;background:#E4D3BB"></div>
+        <span style="font:400 11px/1.2 Karla,sans-serif;color:#9C8B78;text-align:center">Notes</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px">
+        <div style="width:58px;height:58px;border-radius:16px;background:#E4D3BB"></div>
+        <span style="font:400 11px/1.2 Karla,sans-serif;color:#9C8B78;text-align:center">Copy link</span>
+      </div>
+    </div>
+    <div style="margin:0 20px;padding:13px 15px;border-radius:14px;background:#F2E8D9;display:flex;align-items:center;gap:10px">
+      <span style="font-size:15px;color:#7E8F6E">✓</span>
+      <span style="font:400 12px/1.35 Karla,sans-serif;color:#5C4E42">Saved recipes land in the feed — nobody has to open anything.</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="3b"><div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>It works in the background — feed, with the job in progress</div>
+<div style="width:390px;height:844px;background:#FBF6EC;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 24px 4px;font:600 12px Karla,sans-serif;color:#2E2621"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+  <div style="padding:10px 20px 14px;display:flex;flex-direction:column;gap:3px">
+    <span style="font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#9C8B78">Swanson household</span>
+    <span style="font:500 30px/1 Newsreader,serif;color:#2E2621;letter-spacing:-.01em">Family Cookbook</span>
+  </div>
+
+  <div style="margin:0 20px 18px;border-radius:18px;background:#F2E8D9;border:1px solid rgba(180,85,47,.18);padding:15px;display:flex;flex-direction:column;gap:13px">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="width:52px;height:52px;border-radius:12px;background:repeating-linear-gradient(135deg,#E4D3BB 0 8px,#DCC9AE 8px 16px);flex:none"></div>
+      <div style="display:flex;flex-direction:column;gap:3px;flex:1">
+        <span style="font:600 14px Karla,sans-serif;color:#2E2621">Watching the reel for you…</span>
+        <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C8B78">@weeknightkitchen · added by Nate · 40s</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="display:flex;gap:9px;align-items:center"><span style="color:#7E8F6E;font-size:12px">✓</span><span style="font:400 12px Karla,sans-serif;color:#5C4E42">Downloaded the video</span></div>
+      <div style="display:flex;gap:9px;align-items:center"><span style="color:#7E8F6E;font-size:12px">✓</span><span style="font:400 12px Karla,sans-serif;color:#5C4E42">Transcribed the audio</span></div>
+      <div style="display:flex;gap:9px;align-items:center"><span style="color:#B4552F;font-size:12px">◐</span><span style="font:500 12px Karla,sans-serif;color:#2E2621">Reading the ingredients off screen</span></div>
+      <div style="display:flex;gap:9px;align-items:center;opacity:.45"><span style="font-size:12px;color:#9C8B78">○</span><span style="font:400 12px Karla,sans-serif;color:#5C4E42">Allergens, nutrition, health score</span></div>
+    </div>
+    <div style="height:4px;border-radius:2px;background:#E2DACB;overflow:hidden"><div style="width:62%;height:100%;background:#B4552F"></div></div>
+  </div>
+
+  <div style="flex:1;overflow:hidden;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;align-content:start">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="height:150px;border-radius:14px;background:repeating-linear-gradient(135deg,#E4D3BB 0 9px,#DCC9AE 9px 18px)"></div>
+      <span style="font:500 15px/1.22 Newsreader,serif;color:#2E2621">Grilled Salmon with Roasted Vegetables</span>
+      <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">35 min</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="height:172px;border-radius:14px;background:repeating-linear-gradient(135deg,#DFD0BE 0 9px,#D6C5B0 9px 18px)"></div>
+      <span style="font:500 15px/1.22 Newsreader,serif;color:#2E2621">Chicken Burrito Bowl</span>
+      <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">35 min</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:20px;right:20px;bottom:26px;padding:14px 16px;border-radius:16px;background:#2E2621;display:flex;align-items:center;gap:11px;box-shadow:0 12px 28px rgba(46,38,33,.3)">
+    <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(135deg,#5A4E42 0 7px,#4D4238 7px 14px);flex:none"></div>
+    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+      <span style="font:600 13px Karla,sans-serif;color:#FBF6EC">Gochujang Noodles is in the cookbook</span>
+      <span style="font:400 10px 'IBM Plex Mono',monospace;color:rgba(251,246,236,.55)">15 min · contains soy, wheat, sesame</span>
+    </div>
+    <span style="font:600 12px Karla,sans-serif;color:#E8A87C">Open</span>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="3c"><div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>When the download fails — paste the caption, never an error</div>
+<div style="width:390px;height:844px;background:#FBF6EC;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0;font:600 12px Karla,sans-serif;color:#2E2621"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+  <div style="padding:18px 20px 0;display:flex;justify-content:space-between;align-items:center">
+    <span style="font:500 26px Newsreader,serif;color:#2E2621">Almost got it</span>
+    <span style="font:500 14px Karla,sans-serif;color:#9C8B78">Later</span>
+  </div>
+  <div style="padding:12px 20px 0"><span style="font:400 14px/1.5 Karla,sans-serif;color:#5C4E42">Instagram wouldn’t hand over the video this time. The link is saved — paste the caption and we’ll read the recipe from that instead.</span></div>
+
+  <div style="margin:20px 20px 0;padding:13px 15px;border-radius:14px;background:#F2E8D9;display:flex;gap:11px;align-items:center">
+    <div style="width:44px;height:44px;border-radius:10px;background:repeating-linear-gradient(135deg,#E4D3BB 0 8px,#DCC9AE 8px 16px);flex:none"></div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font:600 13px Karla,sans-serif;color:#2E2621">Saved as a stub</span>
+      <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C8B78">instagram.com/reel/C8xk2…</span>
+    </div>
+  </div>
+
+  <div style="margin:18px 20px 0;flex:none;border-radius:16px;background:#F7EFE1;border:1.5px solid rgba(60,40,25,.14);padding:15px;height:210px;display:flex;flex-direction:column;gap:9px">
+    <span style="font:400 10px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#9C8B78">Paste the caption</span>
+    <span style="font:400 15px/1.5 Karla,sans-serif;color:#2E2621">gochujang noodles 🍜 200g udon, 2 tbsp gochujang, 1 tbsp soy, 1 tsp sesame oil, 2 cloves garlic, splash of pasta water<span style="color:#C8B9A5">|</span></span>
+  </div>
+  <div style="padding:10px 20px 0"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;color:#9C8B78">Or take a screenshot of the recipe and add it as a photo.</span></div>
+
+  <div style="position:absolute;left:20px;right:20px;bottom:26px;display:flex;flex-direction:column;gap:10px">
+    <div style="height:60px;border-radius:30px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:600 17px Karla,sans-serif;box-shadow:0 10px 24px rgba(180,85,47,.3)">Read the recipe from this</div>
+    <div style="height:52px;border-radius:26px;background:#F2E8D9;color:#5C4E42;display:flex;align-items:center;justify-content:center;font:600 15px Karla,sans-serif">Add a screenshot instead</div>
+  </div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: "add the review-before-saving step after <a class="dv-oid" href="#3b">3b</a>" · "show what a reel recipe looks like in the detail screen" · "make the progress card a quiet toast instead"</p>
+</section>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Screens — built in <a class="dv-oid" href="#1a">1a</a> Hearth</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Feed — photo-forward card grid</div>
+<div style="width:390px;height:844px;background:#FBF6EC;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 24px 4px;font:600 12px Karla,sans-serif;color:#2E2621">
+    <span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span>
+  </div>
+  <div style="padding:10px 20px 14px;display:flex;justify-content:space-between;align-items:flex-end">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#9C8B78">Swanson household</span>
+      <span style="font:500 30px/1 Newsreader,serif;color:#2E2621;letter-spacing:-.01em">Family Cookbook</span>
+    </div>
+    <div style="width:36px;height:36px;border-radius:50%;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:600 13px Karla,sans-serif">N</div>
+  </div>
+  <div style="padding:0 20px 12px;display:flex;gap:10px;align-items:center">
+    <div style="flex:1;height:40px;border-radius:20px;background:#F2E8D9;border:1px solid rgba(60,40,25,.09);display:flex;align-items:center;gap:9px;padding:0 15px;font:400 14px Karla,sans-serif;color:#9C8B78">
+      <span style="font-size:13px">⌕</span>Search 47 recipes
+    </div>
+  </div>
+  <div style="padding:0 20px 16px;display:flex;gap:8px;overflow:hidden">
+    <span style="padding:7px 14px;border-radius:16px;background:#2E2621;color:#FBF6EC;font:600 12px Karla,sans-serif;white-space:nowrap">All</span>
+    <span style="padding:7px 14px;border-radius:16px;background:#F2E8D9;color:#5C4E42;font:500 12px Karla,sans-serif;white-space:nowrap">Dinner</span>
+    <span style="padding:7px 14px;border-radius:16px;background:#F2E8D9;color:#5C4E42;font:500 12px Karla,sans-serif;white-space:nowrap">Under 30</span>
+    <span style="padding:7px 14px;border-radius:16px;background:#F2E8D9;color:#5C4E42;font:500 12px Karla,sans-serif;white-space:nowrap">Never cooked</span>
+  </div>
+  <div style="flex:1;overflow:hidden;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;align-content:start">
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="height:158px;border-radius:14px;background:repeating-linear-gradient(135deg,#E4D3BB 0 9px,#DCC9AE 9px 18px);display:flex;align-items:flex-end;justify-content:space-between;padding:9px;position:relative">
+        <span style="font:400 8px/1.3 'IBM Plex Mono',monospace;color:#8B7A64;background:rgba(251,246,236,.85);padding:3px 5px;border-radius:4px">latest cook photo</span>
+        <span style="position:absolute;top:9px;right:9px;background:rgba(46,38,33,.72);color:#FBF6EC;font:500 9px 'IBM Plex Mono',monospace;padding:3px 6px;border-radius:5px">3 cooks</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <span style="font:500 15px/1.22 Newsreader,serif;color:#2E2621">Grilled Salmon with Roasted Vegetables</span>
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">35 min</span>
+          <span style="color:#B4552F;font-size:11px;letter-spacing:.5px">★★★★★</span>
+        </div>
+        <div style="display:flex;gap:-4px">
+          <span style="width:18px;height:18px;border-radius:50%;background:#B4552F;color:#FBF6EC;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC">N</span>
+          <span style="width:18px;height:18px;border-radius:50%;background:#7E8F6E;color:#FBF6EC;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC;margin-left:-6px">S</span>
+          <span style="width:18px;height:18px;border-radius:50%;background:#C08A3E;color:#FBF6EC;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC;margin-left:-6px">J</span>
+          <span style="width:18px;height:18px;border-radius:50%;background:#E4D3BB;color:#5C4E42;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC;margin-left:-6px">+3</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="height:190px;border-radius:14px;background:repeating-linear-gradient(135deg,#DFD0BE 0 9px,#D6C5B0 9px 18px);display:flex;align-items:flex-end;padding:9px">
+        <span style="font:400 8px/1.3 'IBM Plex Mono',monospace;color:#8B7A64;background:rgba(251,246,236,.85);padding:3px 5px;border-radius:4px">source photo</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <span style="font:500 15px/1.22 Newsreader,serif;color:#2E2621">Chicken Burrito Bowl</span>
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">35 min</span>
+          <span style="color:#B4552F;font-size:11px;letter-spacing:.5px">★★★★<span style="color:#DCC9AE">★</span></span>
+        </div>
+        <div style="display:flex">
+          <span style="width:18px;height:18px;border-radius:50%;background:#7E8F6E;color:#FBF6EC;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC">S</span>
+          <span style="width:18px;height:18px;border-radius:50%;background:#C08A3E;color:#FBF6EC;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC;margin-left:-6px">J</span>
+          <span style="width:18px;height:18px;border-radius:50%;background:#E4D3BB;color:#5C4E42;font:600 8px Karla;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF6EC;margin-left:-6px">+2</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="height:176px;border-radius:14px;background:repeating-linear-gradient(135deg,#E6D6C0 0 9px,#DECBB2 9px 18px);display:flex;align-items:flex-end;padding:9px">
+        <span style="font:400 8px/1.3 'IBM Plex Mono',monospace;color:#8B7A64;background:rgba(251,246,236,.85);padding:3px 5px;border-radius:4px">cook photo · Gran</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <span style="font:500 15px/1.22 Newsreader,serif;color:#2E2621">Skillet Chocolate Chip Cookie</span>
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">35 min</span>
+          <span style="color:#B4552F;font-size:11px;letter-spacing:.5px">★★★★★</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="height:150px;border-radius:14px;background:repeating-linear-gradient(135deg,#DED8C8 0 9px,#D5CEBC 9px 18px);display:flex;align-items:flex-start;justify-content:flex-end;padding:9px">
+        <span style="background:#7E8F6E;color:#FBF6EC;font:500 9px 'IBM Plex Mono',monospace;padding:3px 6px;border-radius:5px">new</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <span style="font:500 15px/1.22 Newsreader,serif;color:#2E2621">Weeknight Green Curry</span>
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">25 min</span>
+          <span style="font:400 11px 'IBM Plex Mono',monospace;color:#B4552F">never cooked</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;height:96px;background:linear-gradient(to top,#FBF6EC 55%,rgba(251,246,236,0))"></div>
+  <div style="position:absolute;left:20px;right:20px;bottom:22px;height:62px;border-radius:31px;background:#2E2621;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 26px;box-shadow:0 10px 26px rgba(46,38,33,.28)">
+    <span style="font:600 13px Karla,sans-serif;color:#FBF6EC">Cookbook</span>
+    <span style="font:500 13px Karla,sans-serif;color:rgba(251,246,236,.5)">Cooks</span>
+    <span style="width:46px;height:46px;border-radius:50%;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:400 26px Karla,sans-serif;line-height:1">+</span>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Recipe detail — ingredients always visible</div>
+<div style="width:390px;height:844px;background:#FBF6EC;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="height:210px;background:repeating-linear-gradient(135deg,#E4D3BB 0 9px,#DCC9AE 9px 18px);position:relative;flex:none">
+    <div style="display:flex;justify-content:space-between;padding:16px 20px 0;font:600 12px Karla,sans-serif;color:#5C4E42"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+    <div style="position:absolute;top:52px;left:18px;width:38px;height:38px;border-radius:50%;background:rgba(251,246,236,.92);display:flex;align-items:center;justify-content:center;font-size:16px;color:#2E2621">←</div>
+    <div style="position:absolute;top:52px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(251,246,236,.92);display:flex;align-items:center;justify-content:center;font-size:15px;color:#2E2621">♡</div>
+    <span style="position:absolute;left:20px;bottom:44px;font:400 8px 'IBM Plex Mono',monospace;color:#8B7A64;background:rgba(251,246,236,.85);padding:3px 5px;border-radius:4px">hero photo</span>
+  </div>
+  <div style="flex:1;margin-top:-28px;background:#FBF6EC;border-radius:26px 26px 0 0;padding:22px 20px 0;position:relative;overflow:hidden">
+    <span style="font:400 10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#9C8B78">from bonappetit.com</span>
+    <div style="font:500 25px/1.14 Newsreader,serif;color:#2E2621;margin:5px 0 7px;letter-spacing:-.01em">Grilled Salmon with<br>Roasted Vegetables</div>
+    <div style="display:flex;gap:14px;font:400 12px 'IBM Plex Mono',monospace;color:#7A6A59;padding-bottom:10px;border-bottom:1px solid rgba(60,40,25,.1)">
+      <span>serves 4</span><span>·</span><span>15 prep</span><span>·</span><span>20 cook</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;margin:10px 0 5px">
+      <span style="padding:6px 11px;border-radius:8px;background:#F3E2DA;color:#9A3E1E;font:600 12px Karla,sans-serif">Contains fish</span>
+      <span style="padding:6px 11px;border-radius:8px;background:#EDF0E7;color:#5C6B4C;font:500 12px Karla,sans-serif">Sam: peanut — clear</span>
+    </div>
+    <div style="font:400 11px/1.35 'IBM Plex Mono',monospace;color:#9C8B78;margin-bottom:12px">AI-generated — check the ingredients below.</div>
+
+    <div style="display:flex;gap:12px;align-items:stretch;margin-bottom:14px">
+      <div style="width:104px;flex:none;border-radius:14px;background:#F2E8D9;padding:12px 12px 11px;display:flex;flex-direction:column;gap:2px">
+        <span style="font:400 9px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#9C8B78">Health · est.</span>
+        <span style="font:500 34px/1 Newsreader,serif;color:#7E8F6E">94</span>
+        <div style="height:4px;border-radius:2px;background:#E2DACB;margin-top:5px;overflow:hidden"><div style="width:94%;height:100%;background:#7E8F6E"></div></div>
+        <span style="font:400 10px/1.3 Karla,sans-serif;color:#8B7A64;margin-top:6px">Lean protein, vegetable-forward</span>
+      </div>
+      <div style="flex:1;border-radius:14px;background:#F2E8D9;padding:12px;display:flex;flex-direction:column;gap:8px">
+        <span style="font:400 9px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#9C8B78">Per serving · estimate · medium confidence</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 4px">
+          <div style="display:flex;flex-direction:column"><span style="font:500 17px Newsreader,serif;color:#2E2621">420</span><span style="font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78">cal</span></div>
+          <div style="display:flex;flex-direction:column"><span style="font:500 17px Newsreader,serif;color:#2E2621">38g</span><span style="font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78">protein</span></div>
+          <div style="display:flex;flex-direction:column"><span style="font:500 17px Newsreader,serif;color:#2E2621">14g</span><span style="font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78">carbs</span></div>
+          <div style="display:flex;flex-direction:column"><span style="font:500 17px Newsreader,serif;color:#2E2621">24g</span><span style="font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78">fat</span></div>
+          <div style="display:flex;flex-direction:column"><span style="font:500 17px Newsreader,serif;color:#2E2621">5g</span><span style="font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78">fiber</span></div>
+          <div style="display:flex;flex-direction:column;opacity:.45"><span style="font:500 17px Newsreader,serif;color:#2E2621">380mg</span><span style="font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78">sodium · low conf.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+      <span style="font:500 18px Newsreader,serif;color:#2E2621">Ingredients</span>
+      <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">for 4 · scale</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(60,40,25,.07)"><span style="width:74px;flex:none;font:500 13px 'IBM Plex Mono',monospace;color:#B4552F">4 fillets</span><span style="font:400 14px/1.3 Karla,sans-serif;color:#2E2621">salmon <span style="color:#9C8B78">— 6 oz each</span></span></div>
+      <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(60,40,25,.07)"><span style="width:74px;flex:none;font:500 13px 'IBM Plex Mono',monospace;color:#B4552F">1 lb</span><span style="font:400 14px/1.3 Karla,sans-serif;color:#2E2621">broccoli florets</span></div>
+      <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(60,40,25,.07)"><span style="width:74px;flex:none;font:500 13px 'IBM Plex Mono',monospace;color:#B4552F">1</span><span style="font:400 14px/1.3 Karla,sans-serif;color:#2E2621">red bell pepper <span style="color:#9C8B78">— sliced</span></span></div>
+      <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(60,40,25,.07)"><span style="width:74px;flex:none;font:500 13px 'IBM Plex Mono',monospace;color:#B4552F">2 tbsp</span><span style="font:400 14px/1.3 Karla,sans-serif;color:#2E2621">olive oil</span></div>
+      <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(60,40,25,.07)"><span style="width:74px;flex:none;font:500 13px 'IBM Plex Mono',monospace;color:#B4552F">1</span><span style="font:400 14px/1.3 Karla,sans-serif;color:#2E2621">lemon <span style="color:#9C8B78">— cut into wedges</span></span></div>
+      <div style="display:flex;gap:10px;padding:7px 0"><span style="width:74px;flex:none;font:500 13px 'IBM Plex Mono',monospace;color:#9C8B78">optional</span><span style="font:400 14px/1.3 Karla,sans-serif;color:#2E2621">salt and pepper <span style="color:#9C8B78">— to taste</span></span></div>
+    </div>
+    <div style="height:96px"></div>
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 26px;background:linear-gradient(to top,#FBF6EC 72%,rgba(251,246,236,0))">
+    <div style="height:60px;border-radius:30px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;gap:9px;font:600 17px Karla,sans-serif;box-shadow:0 10px 24px rgba(180,85,47,.3)">Start cook mode</div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Cook mode — tap the big buttons</div>
+<div style="width:390px;height:844px;background:#2E2621;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px 0;font:600 12px Karla,sans-serif;color:rgba(251,246,236,.6)"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px 0">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font:400 11px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#9C8B78">Grilled Salmon</span>
+      <span style="font:500 15px Karla,sans-serif;color:#FBF6EC">Step {{ stepLabel }}</span>
+    </div>
+    <div onClick="{{ exitCook }}" style="width:52px;height:52px;border-radius:26px;background:rgba(251,246,236,.1);color:#FBF6EC;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer">✕</div>
+  </div>
+  <div style="display:flex;gap:6px;padding:20px 20px 0">
+    <div style="flex:1;height:5px;border-radius:3px;background:#B4552F"></div>
+    <div style="flex:1;height:5px;border-radius:3px;background:{{ bar2 }}"></div>
+    <div style="flex:1;height:5px;border-radius:3px;background:{{ bar3 }}"></div>
+  </div>
+  <div style="flex:1;padding:34px 24px 0;display:flex;flex-direction:column;gap:26px">
+    <div style="font:400 40px/1.2 Newsreader,serif;color:#FBF6EC;letter-spacing:-.005em;text-wrap:pretty">{{ stepText }}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ stepIngredients }}" as="ing" hint-placeholder-count="3">
+        <span style="padding:10px 15px;border-radius:12px;background:rgba(251,246,236,.09);color:#E8DCC8;font:500 16px Karla,sans-serif">{{ ing }}</span>
+      </sc-for>
+    </div>
+  </div>
+  <div style="padding:0 20px 12px"><div style="height:64px;border-radius:16px;border:1.5px solid rgba(251,246,236,.22);display:flex;align-items:center;justify-content:center;gap:10px;color:#E8DCC8;font:600 19px Karla,sans-serif">⏱ Start 15 min timer</div></div>
+  <div style="display:flex;gap:12px;padding:0 20px 30px">
+    <div onClick="{{ prevStep }}" style="width:104px;height:92px;border-radius:20px;background:rgba(251,246,236,.1);color:#FBF6EC;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;user-select:none">←</div>
+    <div onClick="{{ nextStep }}" style="flex:1;height:92px;border-radius:20px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:600 26px Karla,sans-serif;cursor:pointer;user-select:none">{{ nextLabel }}</div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="2d"><div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a>Log a cook — tap a face, then stars</div>
+<div style="width:390px;height:844px;background:#FBF6EC;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(60,40,25,.18);border:1px solid rgba(60,40,25,.14);font-family:Karla,system-ui,sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0;font:600 12px Karla,sans-serif;color:#2E2621"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+  <div style="padding:16px 20px 0;display:flex;justify-content:space-between;align-items:center">
+    <span style="font:500 26px Newsreader,serif;color:#2E2621">Log a cook</span>
+    <span style="font:500 14px Karla,sans-serif;color:#9C8B78">Cancel</span>
+  </div>
+  <div style="padding:14px 20px 0;display:flex;gap:11px;align-items:center">
+    <div style="width:52px;height:52px;border-radius:12px;background:repeating-linear-gradient(135deg,#E4D3BB 0 8px,#DCC9AE 8px 16px)"></div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font:500 16px Newsreader,serif;color:#2E2621">Grilled Salmon with Roasted Vegetables</span>
+      <span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">3rd time · last cooked Mar 2</span>
+    </div>
+  </div>
+  <div style="padding:20px 20px 0;display:flex;gap:8px">
+    <span style="flex:1;height:44px;border-radius:12px;background:#2E2621;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:600 14px Karla,sans-serif">Tonight</span>
+    <span style="flex:1;height:44px;border-radius:12px;background:#F2E8D9;color:#5C4E42;display:flex;align-items:center;justify-content:center;font:500 14px Karla,sans-serif">Yesterday</span>
+    <span style="flex:1;height:44px;border-radius:12px;background:#F2E8D9;color:#5C4E42;display:flex;align-items:center;justify-content:center;font:500 14px Karla,sans-serif">Pick date</span>
+  </div>
+  <div style="padding:16px 20px 0;display:flex;gap:10px">
+    <div style="width:92px;height:92px;border-radius:14px;border:1.5px dashed rgba(60,40,25,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#9C8B78"><span style="font-size:20px">◎</span><span style="font:500 11px Karla,sans-serif">Camera</span></div>
+    <div style="width:92px;height:92px;border-radius:14px;background:repeating-linear-gradient(135deg,#E4D3BB 0 8px,#DCC9AE 8px 16px)"></div>
+  </div>
+  <div style="padding:24px 20px 0;display:flex;flex-direction:column;gap:12px">
+    <span style="font:500 19px Newsreader,serif;color:#2E2621">How was it?</span>
+    <div style="display:flex;gap:12px">
+      <sc-for list="{{ members }}" as="m" hint-placeholder-count="6">
+        <div onClick="{{ m.select }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;width:44px">
+          <div style="width:44px;height:44px;border-radius:50%;background:#E4D3BB;color:#5C4E42;display:flex;align-items:center;justify-content:center;font:600 15px Karla,sans-serif;box-shadow:{{ m.ring }}">{{ m.initial }}</div>
+          <span style="font:500 9px 'IBM Plex Mono',monospace;color:#B4552F;letter-spacing:-.5px">{{ m.stars }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="margin:16px 20px 0;padding:16px;border-radius:16px;background:#F2E8D9;display:flex;flex-direction:column;gap:12px">
+    <span style="font:500 15px Karla,sans-serif;color:#5C4E42">{{ activeName }}’s rating</span>
+    <div style="display:flex;gap:10px">
+      <sc-for list="{{ activeStars }}" as="s" hint-placeholder-count="5">
+        <div onClick="{{ s.set }}" style="width:54px;height:54px;border-radius:14px;background:#FBF6EC;display:flex;align-items:center;justify-content:center;font-size:26px;color:#B4552F;cursor:pointer;user-select:none">{{ s.glyph }}</div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:7px">
+    <span style="font:400 10px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#9C8B78">What we changed</span>
+    <div style="border-bottom:1.5px solid rgba(60,40,25,.16);padding-bottom:9px;font:400 15px Karla,sans-serif;color:#2E2621">Swapped broccoli for green beans <span style="color:#C8B9A5">|</span></div>
+  </div>
+  <div style="position:absolute;left:20px;right:20px;bottom:26px;height:60px;border-radius:30px;background:#B4552F;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font:600 17px Karla,sans-serif;box-shadow:0 10px 24px rgba(180,85,47,.3)">Save cook</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: "build the feed in <a class="dv-oid" href="#1b">1b</a> Counter too" · "make cook mode light instead of dark" · "show the recipe detail for the cookie, low-confidence nutrition"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Style directions</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Hearth — warm rustic (the brief)</div>
+<div style="width:360px;background:#F7F0E4;border:1px solid rgba(60,40,25,.12);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <span style="font:500 24px Newsreader,serif;color:#2E2621">Hearth</span>
+    <span style="font:400 12px/1.4 Karla,sans-serif;color:#7A6A59">Terracotta, cream, sage. Warm serif headings, generous line height — the well-loved recipe box.</span>
+  </div>
+  <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;height:56px">
+    <div style="flex:1;background:#FBF6EC;box-shadow:inset 0 0 0 1px rgba(60,40,25,.1)"></div><div style="flex:1;background:#F2E8D9"></div><div style="flex:1;background:#B4552F"></div><div style="flex:1;background:#7E8F6E"></div><div style="flex:1;background:#C08A3E"></div><div style="flex:1;background:#2E2621"></div>
+  </div>
+  <div style="display:flex;gap:8px;font:400 9px 'IBM Plex Mono',monospace;color:#9C8B78;flex-wrap:wrap">
+    <span>#FBF6EC</span><span>#F2E8D9</span><span>#B4552F</span><span>#7E8F6E</span><span>#C08A3E</span><span>#2E2621</span>
+  </div>
+  <div style="border-top:1px solid rgba(60,40,25,.1);padding-top:16px;display:flex;flex-direction:column;gap:8px">
+    <span style="font:500 32px/1.05 Newsreader,serif;color:#2E2621;letter-spacing:-.01em">Buttermilk Biscuits</span>
+    <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C8B78">Newsreader 500 · display</span>
+    <span style="font:400 14px/1.5 Karla,sans-serif;color:#5C4E42">Cut cold butter into the flour until it looks like coarse meal — a few pea-sized lumps are what you want.</span>
+    <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C8B78">Karla 400 · body &nbsp;/&nbsp; IBM Plex Mono · quantities, labels</span>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;background:#F2E8D9;padding:10px;display:flex;flex-direction:column;gap:8px">
+    <div style="height:110px;border-radius:9px;background:repeating-linear-gradient(135deg,#E4D3BB 0 9px,#DCC9AE 9px 18px)"></div>
+    <span style="font:500 16px Newsreader,serif;color:#2E2621">Skillet Chocolate Chip Cookie</span>
+    <div style="display:flex;gap:8px;align-items:center"><span style="font:400 11px 'IBM Plex Mono',monospace;color:#9C8B78">35 min</span><span style="color:#B4552F;font-size:11px">★★★★★</span></div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Counter — quiet and modern</div>
+<div style="width:360px;background:#FAFAF8;border:1px solid rgba(0,0,0,.1);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <span style="font:600 24px 'Instrument Sans',sans-serif;color:#141413;letter-spacing:-.02em">Counter</span>
+    <span style="font:400 12px/1.4 'Instrument Sans',sans-serif;color:#6B6A66">Paper white, graphite, one deep green. Tight sans, hairline rules, photos do all the talking.</span>
+  </div>
+  <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;height:56px">
+    <div style="flex:1;background:#FAFAF8"></div><div style="flex:1;background:#EFEEEA"></div><div style="flex:1;background:#D8D6D0"></div><div style="flex:1;background:#2F6F5E"></div><div style="flex:1;background:#141413"></div>
+  </div>
+  <div style="display:flex;gap:8px;font:400 9px 'IBM Plex Mono',monospace;color:#8A8983;flex-wrap:wrap">
+    <span>#FAFAF8</span><span>#EFEEEA</span><span>#D8D6D0</span><span>#2F6F5E</span><span>#141413</span>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.1);padding-top:16px;display:flex;flex-direction:column;gap:8px">
+    <span style="font:600 32px/1.05 'Instrument Sans',sans-serif;color:#141413;letter-spacing:-.03em">Buttermilk Biscuits</span>
+    <span style="font:400 10px 'IBM Plex Mono',monospace;color:#8A8983">Instrument Sans 600 · display</span>
+    <span style="font:400 14px/1.5 'Instrument Sans',sans-serif;color:#3C3B38">Cut cold butter into the flour until it looks like coarse meal — a few pea-sized lumps are what you want.</span>
+    <span style="font:400 10px 'IBM Plex Mono',monospace;color:#8A8983">Instrument Sans 400 · body &nbsp;/&nbsp; IBM Plex Mono · quantities</span>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;background:#fff;border:1px solid rgba(0,0,0,.08);padding:10px;display:flex;flex-direction:column;gap:8px">
+    <div style="height:110px;border-radius:6px;background:repeating-linear-gradient(135deg,#E6E5E1 0 9px,#DEDDD8 9px 18px)"></div>
+    <span style="font:600 15px 'Instrument Sans',sans-serif;color:#141413;letter-spacing:-.01em">Skillet Chocolate Chip Cookie</span>
+    <div style="display:flex;gap:8px;align-items:center"><span style="font:400 11px 'IBM Plex Mono',monospace;color:#8A8983">35 min</span><span style="color:#2F6F5E;font-size:11px">★★★★★</span></div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Jam — bright and playful</div>
+<div style="width:360px;background:#FFF8EE;border:1px solid rgba(59,31,58,.14);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <span style="font:800 24px 'Bricolage Grotesque',sans-serif;color:#3B1F3A;letter-spacing:-.02em">Jam</span>
+    <span style="font:400 12px/1.4 'DM Sans',sans-serif;color:#6E5468">Berry, plum, sunshine. Chunky display type, thick rounded shapes, colour blocks instead of photos when there aren’t any.</span>
+  </div>
+  <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;height:56px">
+    <div style="flex:1;background:#FFF8EE"></div><div style="flex:1;background:#FFE2C7"></div><div style="flex:1;background:#F2A93B"></div><div style="flex:1;background:#D6355E"></div><div style="flex:1;background:#3B1F3A"></div>
+  </div>
+  <div style="display:flex;gap:8px;font:400 9px 'IBM Plex Mono',monospace;color:#9C7F97;flex-wrap:wrap">
+    <span>#FFF8EE</span><span>#FFE2C7</span><span>#F2A93B</span><span>#D6355E</span><span>#3B1F3A</span>
+  </div>
+  <div style="border-top:1px solid rgba(59,31,58,.12);padding-top:16px;display:flex;flex-direction:column;gap:8px">
+    <span style="font:800 32px/1.02 'Bricolage Grotesque',sans-serif;color:#D6355E;letter-spacing:-.03em">Buttermilk Biscuits</span>
+    <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C7F97">Bricolage Grotesque 800 · display</span>
+    <span style="font:400 14px/1.5 'DM Sans',sans-serif;color:#4A3247">Cut cold butter into the flour until it looks like coarse meal — a few pea-sized lumps are what you want.</span>
+    <span style="font:400 10px 'IBM Plex Mono',monospace;color:#9C7F97">DM Sans 400 · body &nbsp;/&nbsp; IBM Plex Mono · quantities</span>
+  </div>
+  <div style="border-radius:18px;overflow:hidden;background:#FFE2C7;padding:10px;display:flex;flex-direction:column;gap:8px">
+    <div style="height:110px;border-radius:14px;background:repeating-linear-gradient(135deg,#F7CFA6 0 9px,#F3C393 9px 18px)"></div>
+    <span style="font:600 16px 'Bricolage Grotesque',sans-serif;color:#3B1F3A">Skillet Chocolate Chip Cookie</span>
+    <div style="display:flex;gap:8px;align-items:center"><span style="padding:3px 8px;border-radius:10px;background:#D6355E;color:#FFF8EE;font:500 10px 'IBM Plex Mono',monospace">35 min</span><span style="color:#F2A93B;font-size:12px">★★★★★</span></div>
+  </div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: "keep <a class="dv-oid" href="#1a">1a</a> but swap sage for a deeper olive" · "show <a class="dv-oid" href="#1c">1c</a> as a full feed screen" · "cross <a class="dv-oid" href="#1a">1a</a>’s palette with <a class="dv-oid" href="#1b">1b</a>’s type"</p>
+</section>
+]]>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1500,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  state = {
+    step: 1,
+    active: 'Sam',
+    ratings: { Nate: 5, Sam: 4, Jordan: 0, Mia: 0, Theo: 0, Gran: 0 },
+    setup: { 1: true, 2: false, 3: false }
+  };
+
+  setupSteps = [
+    { n: '1', title: 'Put the cookbook on your Home Screen', body: 'Open the cookbook in Safari, tap Share, then Add to Home Screen. It opens full-screen like an app and stays signed in.', meta: 'Safari · once per phone' },
+    { n: '2', title: 'Install the “Save to Cookbook” shortcut', body: 'Tap the setup link below. Shortcuts opens, you tap Add Shortcut. It accepts a URL and hands it to the cookbook.', meta: 'Shortcuts app · one tap' },
+    { n: '3', title: 'Pin it in the share sheet', body: 'In TikTok or Instagram, tap Share, scroll to the bottom of the actions row, tap Edit Actions, and drag Save to Cookbook to the top.', meta: 'Any app · makes it one tap forever' }
+  ];
+
+  steps = [
+    { text: 'Toss broccoli and bell pepper with olive oil, salt, and pepper. Roast at 425°F for 15 minutes.', ings: ['1 lb broccoli', '1 red bell pepper', '2 tbsp olive oil'] },
+    { text: 'Season salmon fillets with salt, pepper, and lemon. Grill 4–5 minutes per side.', ings: ['4 salmon fillets', '1 lemon', 'salt & pepper'] },
+    { text: 'Serve salmon over the roasted vegetables with a lemon wedge.', ings: ['1 lemon, wedges'] }
+  ];
+
+  renderVals() {
+    const i = this.state.step - 1;
+    const s = this.steps[i];
+    const on = '#B4552F', off = 'rgba(251,246,236,.16)';
+    const members = ['Nate', 'Sam', 'Jordan', 'Mia', 'Theo', 'Gran'].map(name => {
+      const n = this.state.ratings[name] || 0;
+      return {
+        initial: name[0],
+        stars: n ? '★'.repeat(n) : '–',
+        ring: name === this.state.active ? '0 0 0 2.5px #B4552F' : '0 0 0 0 transparent',
+        select: () => this.setState({ active: name })
+      };
+    });
+    const cur = this.state.ratings[this.state.active] || 0;
+    const setupSteps = this.setupSteps.map((st, idx) => {
+      const done = !!this.state.setup[idx + 1];
+      return {
+        n: st.n, title: st.title, body: st.body, meta: st.meta,
+        mark: done ? '✓' : st.n,
+        markBg: done ? '#7E8F6E' : '#E4D3BB',
+        markColor: done ? '#FBF6EC' : '#5C4E42',
+        cardBg: done ? '#F4EFE4' : '#F2E8D9',
+        toggle: () => this.setState(s => ({ setup: { ...s.setup, [idx + 1]: !s.setup[idx + 1] } }))
+      };
+    });
+    const doneCount = Object.values(this.state.setup).filter(Boolean).length;
+    return {
+      setupSteps,
+      setupProgress: doneCount + ' of 3 done',
+      setupBar: (doneCount / 3 * 100) + '%',
+      stepLabel: this.state.step + ' of 3',
+      stepText: s.text,
+      stepIngredients: s.ings,
+      bar2: this.state.step >= 2 ? on : off,
+      bar3: this.state.step >= 3 ? on : off,
+      nextLabel: this.state.step === 3 ? 'Done — log it' : 'Next step',
+      nextStep: () => this.setState(st => ({ step: st.step < 3 ? st.step + 1 : 1 })),
+      prevStep: () => this.setState(st => ({ step: st.step > 1 ? st.step - 1 : 1 })),
+      exitCook: () => this.setState({ step: 1 }),
+      members,
+      activeName: this.state.active,
+      activeStars: [1, 2, 3, 4, 5].map(v => ({
+        glyph: v <= cur ? '★' : '☆',
+        set: () => this.setState(st => ({ ratings: { ...st.ratings, [this.state.active]: v } }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
