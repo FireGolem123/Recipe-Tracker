@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+/* "Hearth" design tokens — see BRAND.md. Single source of truth for these
+   values; don't hardcode hex colors in components. */
+@theme {
+  --color-cream: #fbf6ec;
+  --color-cream-2: #f2e8d9;
+  --color-cream-3: #f7efe1;
+  --color-terracotta: #b4552f;
+  --color-terracotta-tint: #f3e2da;
+  --color-terracotta-text: #9a3e1e;
+  --color-sage: #7e8f6e;
+  --color-sage-tint: #edf0e7;
+  --color-sage-text: #5c6b4c;
+  --color-sage-text-strong: #4f5c41;
+  --color-ochre: #c08a3e;
+  --color-ink: #2e2621;
+  --color-ink-2: #5c4e42;
+  --color-muted: #9c8b78;
+  --color-line: #3c2819;
+  --color-placeholder: #e4d3bb;
+  --color-placeholder-2: #dcc9ae;
+
+  --font-display: "Newsreader", ui-serif, serif;
+  --font-body: "Karla", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-cream font-body text-ink;
+  }
+}

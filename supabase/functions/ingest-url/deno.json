@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "zod": "npm:zod@3.23.8",
+    "zod-to-json-schema": "npm:zod-to-json-schema@3.23.5",
+    "@family-cookbook/shared": "../../../packages/shared/src/recipe.ts",
+    "@anthropic-ai/sdk": "npm:@anthropic-ai/sdk@0.32.1",
+    "@supabase/supabase-js": "npm:@supabase/supabase-js@2.45.4",
+    "deno_dom": "https://deno.land/x/deno_dom@v0.1.45/deno-dom-wasm.ts"
+  }
+}
