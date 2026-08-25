@@ -118,3 +118,38 @@ Migrations: `npx supabase db push`. Edge function: `npx supabase functions deplo
   without a login.
 - **"Cooks" nav tab** — present in the Feed's bottom nav, not wired to anything.
 - **Collections, shopping list, meal plan** — Phase 5.
+
+---
+
+## Starting a session
+
+1. `npm run dev` — dev server at `http://localhost:5173`. Auth is bypassed
+   (`VITE_DEV_SKIP_AUTH=true`), so it drops straight into the Feed against real data — no
+   sign-in step.
+2. Only if migrations changed since last session: `npx supabase db push`.
+3. Only if the edge function changed: `npx supabase functions deploy ingest-url --no-verify-jwt`.
+4. `npm run typecheck` / `npm run build` before considering anything done.
+
+Nothing else needs starting — Supabase is hosted, not local, so there's no `supabase start`
+step.
+
+## Before shipping — must do
+
+Two things stand between this and something a real person outside this session could sign
+into:
+
+1. **Rotate every key that's touched this session.** The Anthropic key and the Supabase
+   service role key were both pasted into chat/tooling during development. Regenerate both
+   (Anthropic Console; Supabase dashboard → Settings → API → service_role) and update
+   `.env` + `supabase secrets set --env-file .env` with the new values before this goes
+   anywhere someone else can see it.
+2. **Re-enable Google OAuth.**
+   - Set `VITE_DEV_SKIP_AUTH=false` (or delete the line) in `apps/web/.env.local`.
+   - Drop the five temporary anon-role policies added while auth was paused — each
+     migration file has its own `-- Revert:` comment with the exact `drop policy`
+     statement: `0002_dev_anon_read.sql`, `0005_dev_anon_write.sql`,
+     `0006_dev_anon_ingest_jobs_read.sql`, `0008_dev_anon_delete_recipes.sql`,
+     `0009_dev_anon_storage_read.sql`. Easiest as one new migration that runs all five
+     `drop policy` statements, pushed with `npx supabase db push`.
+   - Sign in for real and confirm the invite-gate trigger still links to the seeded
+     member correctly, then confirm an uninvited Google account is actually rejected.
